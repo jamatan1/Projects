@@ -1,27 +1,24 @@
 var video;
 var rads = 0;
+var photos;
+var i;
 function setup() {
   canvas = createCanvas(640, 480);
   video = createCapture(VIDEO);
   video.hide();
+  rads = 0;
+  photos = [];
+  i = 0;
 }
 
 function draw() {
   background('white');
-  push();
-  translate(width/2, height/2);
-  rotate(rads);
-  imageMode(CENTER);
-  image(video, 0, 0, width, height);
-  rotate(rads);
-  pop();
-  push();
-  translate(width/4, height*.75);
-  rotate(rads);
-  textSize(20);
-  fill('hotPink');
-  text('You spin me right round baby right round', -100, 20);
-  pop();
-  rads = rads + .02;
-
+  //image(video, 0, 0, width, height);
+  if(frameCount % 60 === 0){
+    photos[i % 70] = video.get();
+    i++;
+  }
+  for (var l = 0; l < photos.length; l++){
+  image(photos[l], floor((l % 5) * 70), floor((l / 5) * 70), 70, 70);
+}
 }
