@@ -1,24 +1,31 @@
+//SHOW THIS LINE CHROME
 var video;
-var rads = 0;
-var photos;
-var i;
+var photo = {};
+var i = 0;
+var photos = [];
+
 function setup() {
-  canvas = createCanvas(640, 480);
+  createCanvas(500, 500);
   video = createCapture(VIDEO);
   video.hide();
-  rads = 0;
-  photos = [];
-  i = 0;
+  if(photos !== undefined){
+    console.log("we good setup");
+  }
+  else{
+    console.log("we bad setup");
+  }
 }
 
 function draw() {
-  background('white');
-  //image(video, 0, 0, width, height);
-  if(frameCount % 60 === 0){
-    photos[i % 70] = video.get();
-    i++;
+  photo.img = video.get();
+  photo.tint = color(random(255), random(255), random(255));
+  background("white");
+  if (frameCount % 60 === 0){
+  photos[i % 70] = photo.img;
+  i++;
   }
   for (var l = 0; l < photos.length; l++){
-  image(photos[l], floor((l % 5) * 70), floor((l / 5) * 70), 70, 70);
-}
+    tint(photo.tint);
+    image(photos[l], (l % 5) * 70, floor(l / 5) * 70, 70, 70);
+  }
 }
