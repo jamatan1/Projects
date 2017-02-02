@@ -1,31 +1,34 @@
 //SHOW THIS LINE CHROME
 var video;
-var photo = {};
-var i = 0;
-var photos = [];
+var i;
+var photos;
 
 function setup() {
+  colorMode(HSB);
   createCanvas(500, 500);
   video = createCapture(VIDEO);
   video.hide();
-  if(photos !== undefined){
-    console.log("we good setup");
-  }
-  else{
-    console.log("we bad setup");
-  }
+  photos = [];
+  i = 0;
 }
 
 function draw() {
-  photo.img = video.get();
-  photo.tint = color(random(255), random(255), random(255));
   background("white");
-  if (frameCount % 60 === 0){
-  photos[i % 70] = photo.img;
-  i++;
+  if (frameCount % 30 === 0){
+    var photo = {};
+
+    photo.img = video.get();
+    photo.tint = color(floor(random(256)), random(256), random(256));
+
+    photos[i % 70] = photo;
+    i++;
   }
+
   for (var l = 0; l < photos.length; l++){
-    tint(photo.tint);
-    image(photos[l], (l % 5) * 70, floor(l / 5) * 70, 70, 70);
+    push();
+    tint(photos[l].tint);
+    image(photos[l].img, (l % 5) * 70, floor(l / 5) * 70, 70, 70);
+    noTint();
+    pop();
   }
 }
