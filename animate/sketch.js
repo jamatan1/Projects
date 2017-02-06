@@ -1,27 +1,23 @@
+//SHOW THIS LINE CHROME
 var video;
-var rads = 0;
+var i;
+var photos;
+
 function setup() {
-  canvas = createCanvas(640, 480);
+  colorMode(HSB);
+  createCanvas(500, 500);
+
   video = createCapture(VIDEO);
   video.hide();
+  photos = [];
+  i = 0;
 }
 
 function draw() {
-  background('white');
-  push();
-  translate(width/2, height/2);
-  rotate(rads);
-  imageMode(CENTER);
-  image(video, 0, 0, width, height);
-  rotate(rads);
-  pop();
-  push();
-  translate(width/4, height*.75);
-  rotate(rads);
-  textSize(20);
-  fill('hotPink');
-  text('You spin me right round baby right round', -100, 20);
-  pop();
-  rads = rads + .02;
-
+  if (frameCount % 30 === 0){
+    photos[i] = video.get();
+    tint(color(floor(random(255)), 50, 100));
+    image(video, ((i % 25 ) % 5) * 70, floor((i % 25) / 5) * 70, 70, 70);
+    i++;
+  }
 }
