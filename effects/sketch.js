@@ -1,20 +1,17 @@
 
 var canvas;
-var graphics;
 var video;
 var serious;
+var trans;
 var bg;
-var bg1;
-var bg2;
-var bg3;
+var bg1 = "libraries/space.mp4";
+var bg2 = "libraries/fireworks.mp4";
+var bg3 = "libraries/lightspeed.mp4";
 function preload(){
-  video = createVideo("libraries/dog.mp4", confirmLoad);
-  bg1 = createVideo("libraries/space.mp4", confirmLoad);
-  bg2 = createVideo("libraries/wormhole.avi", confirmLoad);
-  bg3 = createVideo("libraries/lightspeed.mp4", confirmLoad);
+  bg = createVideo(null);
+  video = createVideo('libraries/dog.mp4');
 }
 function setup() {
-
   canvas = createCanvas(640, 480);
   canvas.id('p5canvas');
 
@@ -26,30 +23,35 @@ function setup() {
 
   video.id("mainvideo");
   video.size(640, 480);
-  video.muted = true;
-  video.loop();
   video.hide();
   playVideo(video);
 
-  bg = bg2;
+  /*bg1.size(640, 480);
+  bg1.elt.muted = true;
+  playVideo(bg1);
+  bg1.hide();
+
+  bg2.size(640, 480);
+  bg2.elt.muted = true;
+  playVideo(bg2);
+  bg2.hide();
+
+  bg3.size(640, 480);
+  bg3.elt.muted = true;
+  playVideo(bg3);
+  bg3.hide();*/
+
+  bg.src = bg1;
+  bg.elt.muted = true;
   bg.id("bgvideo");
-  bg.size(640, 480);
-  bg.muted = true;
   bg.loop();
-  bg.hide();
-  playVideo(bg);
-
-
-  graphics = createGraphics(640, 480);
-  graphics.size(640, 480);
-  graphics.id('graphicscanvas');
-  graphics.hide();
 
   var seriously = new Seriously();
 
-  /*var trans = seriously.transform('reformat');
-  trans.width = width;
-  trans.height = height;*/
+  var trans = seriously.transform('reformat');
+  trans.src = bg;
+  trans.width = 480;
+  trans.height = 640;
 
   var src = seriously.source('#mainvideo');
   var target = seriously.target('#seriouscanvas');
@@ -66,22 +68,36 @@ function confirmLoad() {
 }
 
 function playVideo(vid){
-  vid.play();
+  vid.loop();
 }
 
 function draw() {
+  background('white');
   image(bg, 0, 0);
   image(serious, mouseX, mouseY, 100, 100);
 }
 
+
 function keyPressed(){
   if(bg !== bg1 && keyCode === 49){
-    bg = bg1;
+    bg.src = bg1;
+    bg.loop();
   }
   if(bg !== bg2 && keyCode === 50){
+    /*bg.pause();
     bg = bg2;
+    bg.elt.muted = true;
+    bg.play();*/
+    bg.src = bg2;
+    bg.loop();
+
   }
   if(bg !== bg3 && keyCode === 51){
+    /*bg.pause();
     bg = bg3;
+    bg.elt.muted = true;
+    bg.play();*/
+    bg.src = bg3;
+    bg.loop();
   }
 }
